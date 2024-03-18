@@ -19,6 +19,7 @@ func EmailSender(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "cant attach file", "error": err.Error()})
 		return
 	}
+	//setting a folder to store attachments for sending
 	folderPath := "/home/lenovo/MailApp/attachments"
 	UploadFilePath := folderPath + File.Filename
 	if err := c.SaveUploadedFile(File, UploadFilePath); err != nil {
