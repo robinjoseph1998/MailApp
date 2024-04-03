@@ -3,6 +3,7 @@ package controllers
 import (
 	"MailAoo/utils"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/gomail.v2"
@@ -21,9 +22,9 @@ func EmailSender(c *gin.Context) {
 	}
 	//setting a folder to store attachments for sending
 	folderPath := "/home/lenovo/MailApp/attachments"
-	UploadFilePath := folderPath + File.Filename
+	UploadFilePath := filepath.Join(folderPath, File.Filename)
 	if err := c.SaveUploadedFile(File, UploadFilePath); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "can't attach the file", "error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "can't save uploaded file", "error": err.Error()})
 		return
 	}
 	//Creating dialer for smtp server
